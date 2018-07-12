@@ -1,5 +1,7 @@
-package entities;
+package com.qa.persistence.domains;
 
+
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -8,6 +10,7 @@ import javax.validation.constraints.Size;
 public class Account {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column (name = "ACCOUNTID")
 	private long id;
 	@Column (length = 30)
 	private String firstName;
@@ -16,6 +19,9 @@ public class Account {
 	@Column
 	@Size (min=6, max=6)
 	private String accountNumber;
+	@OneToMany
+	@JoinTable(name = "Account_Transactions", joinColumns = @JoinColumn(name = "ACCOUNTID"), inverseJoinColumns = @JoinColumn(name = "TRANSACTIONID"))
+	private List<Transactions> transactions; 
 	
 	public Account(String firstName, String lastName, String accountNumber) {
 		this.firstName = firstName;
