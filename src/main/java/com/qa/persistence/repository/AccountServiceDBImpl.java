@@ -1,9 +1,10 @@
 package com.qa.persistence.repository;
 
-import java.util.Collection;
+
 import java.util.List;
 
 import javax.enterprise.inject.Default;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,6 +14,7 @@ import javax.transaction.Transactional.TxType;
 
 import com.qa.persistence.domains.Account;
 import com.qa.util.JSONUtil;
+
 @Default
 @Transactional(TxType.SUPPORTS)
 public class AccountServiceDBImpl implements AccountServiceDBRepo{
@@ -23,12 +25,14 @@ public class AccountServiceDBImpl implements AccountServiceDBRepo{
 	
 	public String getAllAccounts() {
 		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a ORDER BY a.lastName DESC", Account.class);
-		Collection<Account> accounts = query.getResultList();
+		List<Account> accounts = query.getResultList();
 		return util.getJSONForObject(accounts);
 	}
 	
-	public Account findAccount(long id) {
-		return em.find(Account.class, id);
+	public String findAccount(long id) {
+		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a WHERE a.id = id", Account.class);
+		Account account = query.getSingleResult();
+		return util.getJSONForObject(account);
 	}
 	
 	@Transactional(TxType.REQUIRED)
@@ -49,7 +53,7 @@ public class AccountServiceDBImpl implements AccountServiceDBRepo{
 	
 	@Transactional(TxType.REQUIRED)
 	public String deleteAccount(long id){
-		Account accountInDB = findAccount(id);
+		String accountInDB = findAccount(id);
 		if (accountInDB != null) {
 			em.remove(accountInDB);
 		}

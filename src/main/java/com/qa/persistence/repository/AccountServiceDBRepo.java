@@ -1,12 +1,14 @@
 package com.qa.persistence.repository;
 
+import java.util.List;
+
 import com.qa.persistence.domains.Account;
 
 public interface AccountServiceDBRepo {
 
 	public String getAllAccounts();
 	
-	public Account findAccount(long id);
+	public String findAccount(long id);
 	
 	public String createAccount(String account);
 	
