@@ -1,5 +1,7 @@
 package com.qa.business;
 
+import javax.inject.Inject;
+
 import com.qa.persistence.domains.Account;
 import com.qa.persistence.repository.AccountServiceRepo;
 import com.qa.util.JSONUtil;
@@ -8,16 +10,13 @@ public class AccountServiceImpl implements IAccountService {
 	
 	private AccountServiceRepo repo;
 	private Checker check;
+	
+	@Inject
 	private JSONUtil util;
 
 	@Override
 	public String getAllAccounts() {
 		return repo.getAllAccounts();
-	}
-
-	@Override
-	public String findAccount(long id) {
-		return repo.findAccount(id);
 	}
 
 	@Override
@@ -32,8 +31,8 @@ public class AccountServiceImpl implements IAccountService {
 	}
 
 	@Override
-	public String updateAccount(Account account, String firstname, String lastname, String accountnumber) {
-		return repo.updateAccount(account, firstname, lastname, accountnumber);
+	public String updateAccount(long id, String account) {
+		return repo.updateAccount(id, account);
 	}
 
 	@Override
