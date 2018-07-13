@@ -4,7 +4,7 @@ package com.qa.persistence.repository;
 import java.util.List;
 
 import javax.enterprise.inject.Default;
-import javax.inject.Inject;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,7 +17,7 @@ import com.qa.util.JSONUtil;
 
 @Default
 @Transactional(TxType.SUPPORTS)
-public class AccountServiceDBImpl implements AccountServiceDBRepo{
+public class AccountServiceDBImpl implements AccountServiceRepo{
 	
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;

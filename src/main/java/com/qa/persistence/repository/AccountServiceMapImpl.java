@@ -17,7 +17,7 @@ import com.qa.util.JSONUtil;
 
 @Alternative
 @Transactional (TxType.SUPPORTS)
-public class AccountServiceMapImpl implements AccountServiceDBRepo {
+public class AccountServiceMapImpl implements AccountServiceRepo {
 
 	
 	

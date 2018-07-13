@@ -1,10 +1,8 @@
 package com.qa.persistence.repository;
 
-import java.util.List;
-
 import com.qa.persistence.domains.Account;
 
-public interface AccountServiceDBRepo {
+public interface AccountServiceRepo {
 
 	public String getAllAccounts();
 	
