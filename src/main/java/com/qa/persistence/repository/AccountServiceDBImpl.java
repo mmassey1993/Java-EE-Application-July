@@ -31,7 +31,7 @@ public class AccountServiceDBImpl implements AccountServiceRepo{
 	
 	@Override
 	public String getAllAccounts() {
-		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a ORDER BY a.lastName DESC", Account.class);
+		TypedQuery<Account> query = em.createQuery("SELECT a FROM Account a", Account.class);
 		List<Account> accounts = query.getResultList();
 		return util.getJSONForObject(accounts);
 	}

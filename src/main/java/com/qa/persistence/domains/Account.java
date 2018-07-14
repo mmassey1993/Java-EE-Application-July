@@ -3,9 +3,11 @@ package com.qa.persistence.domains;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+@ApplicationScoped
 @Entity
 public class Account {
 	
@@ -19,9 +21,13 @@ public class Account {
 	@Column
 	@Size (min=6, max=6)
 	private String accountNumber;
-	@OneToMany
-	@JoinTable(name = "Account_Transactions", joinColumns = @JoinColumn(name = "ACCOUNTID"), inverseJoinColumns = @JoinColumn(name = "TRANSACTIONID"))
-	private List<Transactions> transactions; 
+//	@OneToMany
+//	@JoinTable(name = "Account_Transactions", joinColumns = @JoinColumn(name = "ACCOUNTID"), inverseJoinColumns = @JoinColumn(name = "TRANSACTIONID"))
+//	private List<Transactions> transactions; 
+	
+	public Account() {
+		
+	}
 	
 	public Account(String firstName, String lastName, String accountNumber) {
 		this.firstName = firstName;
@@ -53,8 +59,12 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	public String toString() {
-		return "First Name: " + getFirstName() + " Last Name: " + getLastName() + " Account Number: " + getAccountNumber();
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

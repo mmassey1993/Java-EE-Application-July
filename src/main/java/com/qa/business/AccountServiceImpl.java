@@ -8,8 +8,11 @@ import com.qa.util.JSONUtil;
 
 public class AccountServiceImpl implements IAccountService {
 	
-	private AccountServiceRepo repo;
+	
 	private Checker check;
+	
+	@Inject
+	private AccountServiceRepo repo;
 	
 	@Inject
 	private JSONUtil util;

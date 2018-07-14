@@ -7,35 +7,37 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
 import com.qa.business.IAccountService;
 
 @Path("/account")
+@Produces({"application/json"})
 public class AccountController {
 
 	@Inject
 	private IAccountService accountservice;
 	
-	@GET
 	@Path("/json")
+	@GET
 	public String getAllAccounts() {
 		return accountservice.getAllAccounts();
 	}
 	
-	@POST
 	@Path("/json/{account}")
+	@POST
 	public String createAccount(@PathParam("account") String account) {
 		return accountservice.createAccount(account);
 	}
 	
-	@PUT
 	@Path("/json/{id}")
+	@PUT
 	public String updateAccount(@PathParam("id") long id, String account) {
 		return accountservice.updateAccount(id, account);
 	}
 	
-	@DELETE
 	@Path("/json/{id}")
+	@DELETE
 	public String deleteAccount(@PathParam("id") long id) {
 		return accountservice.deleteAccount(id);
 	}
