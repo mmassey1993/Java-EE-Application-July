@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Account {
 	
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name = "ACCOUNTID")
 	private long id;
 	@Column (length = 30)

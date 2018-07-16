@@ -2,20 +2,25 @@ package com.qa.business;
 
 import javax.inject.Inject;
 
+import com.qa.constants.Constants;
 import com.qa.persistence.domains.Account;
-import com.qa.persistence.repository.AccountServiceRepo;
+import com.qa.persistence.repository.AccountRepo;
 import com.qa.util.JSONUtil;
 
 public class AccountServiceImpl implements IAccountService {
 	
-	
+	@Inject
 	private Checker check;
 	
 	@Inject
-	private AccountServiceRepo repo;
+	private AccountRepo repo;
 	
 	@Inject
 	private JSONUtil util;
+	
+	private boolean isAccountBlocked(Account acc) {
+		return check.checkAccount(acc.getAccountNumber());
+	}
 
 	@Override
 	public String getAllAccounts() {
@@ -26,11 +31,9 @@ public class AccountServiceImpl implements IAccountService {
 	public String createAccount(String account) {
 		Account acc = util.getObjectForJSON(account, Account.class);
 		
-		if (check.checkAccount(acc.getAccountNumber()) == false) {
-			return "{\"message\": \"This account is blocked.\"}";
-		}
-		
-		return repo.createAccount(account);
+		if (isAccountBlocked(acc) == true) {
+			return Constants.ACCOUNT_BLOCKED;
+		}else return repo.createAccount(account);
 	}
 
 	@Override

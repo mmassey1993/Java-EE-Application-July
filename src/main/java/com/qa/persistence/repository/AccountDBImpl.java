@@ -12,14 +12,14 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-
+import com.qa.constants.Constants;
 import com.qa.persistence.domains.Account;
 import com.qa.util.JSONUtil;
 
 
 @Transactional(TxType.SUPPORTS)
 @Default
-public class AccountServiceDBImpl implements AccountServiceRepo{
+public class AccountDBImpl implements AccountRepo{
 	
 	
 	@PersistenceContext(unitName = "primary")
@@ -45,7 +45,7 @@ public class AccountServiceDBImpl implements AccountServiceRepo{
 	public String createAccount(String account) {
 		Account aAccount = util.getObjectForJSON(account, Account.class);
 		em.persist(aAccount);
-		return "{\"message\": \"account successfully added\"}";
+		return Constants.ACCOUNT_ADDED;
 	}
 	
 	@Override
@@ -55,10 +55,11 @@ public class AccountServiceDBImpl implements AccountServiceRepo{
 		Account accFromDB = findAccount(id);
 		if (account != null) {
 			accFromDB = updateAccount;
+			accFromDB.setId(id);
 			em.merge(accFromDB);
 		}
 		
-		return "{\"message\": \"account successfully updated\"}";
+		return Constants.ACCOUNT_UPDATED;
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class AccountServiceDBImpl implements AccountServiceRepo{
 		if (accountInDB != null) {
 			em.remove(accountInDB);
 		}
-		return "{\"message\": \"account successfully deleted\"}";
+		return Constants.ACCOUNT_DELETED;
 	}
 
 	public void setEm(EntityManager em) {

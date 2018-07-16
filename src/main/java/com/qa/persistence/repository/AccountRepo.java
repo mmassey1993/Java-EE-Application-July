@@ -1,6 +1,6 @@
 package com.qa.persistence.repository;
 
-public interface AccountServiceRepo {
+public interface AccountRepo {
 
 	public String getAllAccounts();
 	

@@ -24,9 +24,10 @@ public class AccountController {
 		return accountservice.getAllAccounts();
 	}
 	
-	@Path("/json/{account}")
+	@Path("/json")
 	@POST
-	public String createAccount(@PathParam("account") String account) {
+	@Produces({"application/json"})
+	public String createAccount(String account) {
 		return accountservice.createAccount(account);
 	}
 	

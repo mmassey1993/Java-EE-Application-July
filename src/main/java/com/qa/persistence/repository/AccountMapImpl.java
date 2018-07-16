@@ -12,7 +12,7 @@ import com.qa.util.JSONUtil;
 
 
 @Alternative
-public class AccountServiceMapImpl implements AccountServiceRepo {
+public class AccountMapImpl implements AccountRepo {
 
 	HashMap<Long, Account> accountMap = new HashMap<Long, Account>();
 	List<Account> accountList;

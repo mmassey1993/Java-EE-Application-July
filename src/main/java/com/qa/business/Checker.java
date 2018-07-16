@@ -4,9 +4,9 @@ public class Checker {
 	
 	public boolean checkAccount(String accountnumber) {
 		if (accountnumber.equals("999999")) {
-			return false;
+			return true;
 		}
-		else return true;
+		else return false;
 	}
 
 }
