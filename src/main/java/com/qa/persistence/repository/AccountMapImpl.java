@@ -1,51 +1,46 @@
 package com.qa.persistence.repository;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
+
+import com.qa.constants.Constants;
 import com.qa.persistence.domains.Account;
 import com.qa.util.JSONUtil;
 
 
-
+@ApplicationScoped
 @Alternative
 public class AccountMapImpl implements AccountRepo {
 
-	HashMap<Long, Account> accountMap = new HashMap<Long, Account>();
-	List<Account> accountList;
-	private Account account;
+	private static final Long INITIAL_COUNT = 1L;
+	Map<Long, Account> accountMap;
 	private long id;
 	
 	@Inject
 	private JSONUtil util;
 	
-	@Override
-	public String getAllAccounts(){
-		Iterator<Entry<Long, Account>> it = accountMap.entrySet().iterator();
-		while (it.hasNext()) {
-			HashMap.Entry<Long, Account> account = (HashMap.Entry<Long, Account>) it.next();
-			accountList.add((Account) account);
-		}
-		return util.getJSONForObject(accountList);
+	public AccountMapImpl() {
+		this.accountMap = new HashMap<Long, Account>();
+		id = INITIAL_COUNT;
+		initAccountMap();
 	}
 	
-
-	public String findAccount(long id) {
-		if (accountMap.containsKey(id)) {
-			account = accountMap.get(id);
-		}
-		return util.getJSONForObject(account);
+	@Override
+	public String getAllAccounts(){
+		
+		return util.getJSONForObject(accountMap.values());
 	}
 	
 	@Override
 	public String createAccount(String account) {
+		id++;
 		Account aAccount = util.getObjectForJSON(account, Account.class);
 		accountMap.put(id, aAccount);
-		id++;
-		return "Account has been created.";
+		return account;
 	}
 	
 	@Override
@@ -57,9 +52,14 @@ public class AccountMapImpl implements AccountRepo {
 	public String deleteAccount(long id){
 		if (accountMap.containsKey(id)) {
 			accountMap.remove(id);
-			return "Account has been removed.";
+			return Constants.ACCOUNT_DELETED;
 		}
-		else return "Account has not been removed.";
+		else return Constants.ACCOUNT_NOT_DELETED;
 	}	
+	
+	public void initAccountMap() {
+		Account account = new Account("Joe", "Bloggs", "012345");
+		accountMap.put(1L, account);
+	}
 	
 }

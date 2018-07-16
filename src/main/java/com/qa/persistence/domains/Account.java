@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@ApplicationScoped
+
 @Entity
 public class Account {
 	
@@ -21,9 +21,9 @@ public class Account {
 	@Column
 	@Size (min=6, max=6)
 	private String accountNumber;
-//	@OneToMany
-//	@JoinTable(name = "Account_Transactions", joinColumns = @JoinColumn(name = "ACCOUNTID"), inverseJoinColumns = @JoinColumn(name = "TRANSACTIONID"))
-//	private List<Transactions> transactions; 
+	@OneToMany
+	@JoinTable(name = "Account_Transactions", joinColumns = @JoinColumn(name = "ACCOUNTID"), inverseJoinColumns = @JoinColumn(name = "TRANSACTIONID"))
+	private List<Transaction> transactions; 
 	
 	public Account() {
 		
@@ -65,6 +65,19 @@ public class Account {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String addTransaction(Transaction transaction) {
+		transactions.add(transaction);
+		return "Transaction added.";
+	}
+	
+	public String removeTransaction(Transaction transactionId) {
+		if (transactions.contains(transactionId)) {
+			transactions.remove(transactionId);
+			return "Transaction removed.";
+		} else return "Transaction does not exist.";
+		
 	}
 	
 }

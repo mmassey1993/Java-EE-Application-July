@@ -4,9 +4,9 @@ import javax.persistence.*;
 
 
 @Entity
-public class Transactions {
+public class Transaction {
 
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name = "TRANSACTIONID")
 	private long transactionId;
 	@Column (length = 30)
@@ -16,7 +16,7 @@ public class Transactions {
 	@JoinColumn(name = "Account", referencedColumnName = "ACCOUNTID")
 	private Account account;
 	
-	public Transactions(int transactionId, String name) {
+	public Transaction(int transactionId, String name) {
 		this.transactionId = transactionId;
 		this.name = name;
 	}
